@@ -1,0 +1,10 @@
+{
+  "name" : "vim-config-garbas",
+  "version" : "0.1",
+  "author" : "Rok Garbas",
+  "maintainer" : "Rok Garbas <rok@garbas.si>",
+  "repository" : {"type": "git", "url": "git://github.com/garbas/vim-config-garbas.git"},
+  "dependencies" : {
+  },
+  "description" : "collection of usefull configurational snippets"
+}
