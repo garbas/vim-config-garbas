@@ -42,6 +42,7 @@ fun! vim_config_garbas#plugins(features)
     endfor
     call vam#ActivateAddons(activate, {
         \ 'auto_install': 1,
+        \ 'plugin_root_dir': $HOME.'/.vim/addons',
         \ 'scm_merge_stategy': 'force',
         \ 'known_repos_activation_policy': 'ask',
         \ })
