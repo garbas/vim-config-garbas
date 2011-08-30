@@ -78,7 +78,7 @@ endfun
 fun! vim_config_garbas#config(features)
 
     "" GENERAL - I think we can all agree this would be nice default
-    let mapleader = ","
+    let mapleader=","
     set nomodeline  " FreeBSD security advisory for this one...
     set enc=utf-8  " set the default encoding
     set title  " set the title of the window
@@ -116,7 +116,7 @@ fun! vim_config_garbas#config(features)
     set shiftwidth=4
     set softtabstop=4
     set expandtab
-    set foldmethod=indent
+    ""set foldmethod=indent
     set wrap
     set textwidth=79
     if version >= 730
@@ -178,7 +178,7 @@ fun! vim_config_garbas#config(features)
         "" Use the same symbols as TextMate for tabstops and EOLs
         set listchars=tab:▸\ ,eol:¬
 
-        "" WINDOWS / BUFFERS
+        "" WINDOWS
         nnoremap <C-h> <C-w>h
         nnoremap <C-j> <C-w>j
         nnoremap <C-k> <C-w>k
