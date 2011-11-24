@@ -4,22 +4,24 @@ fun! vim_config_garbas#plugins(features)
 
     let plugins = {
         \ 'always': [
-            \ 'vim-addon-git',
             \ 'snipmate',
             \ 'snipmate-snippets',
             \ 'Gist',
             \ 'Gundo',
+            \ 'Solarized',
+            \ 'Syntastic',
             \ 'TaskList',
-            \ 'ack',
-            \ 'SuperTab_continued.',
-            \ 'wombat256',
+            \ 'buffergator',
             \ 'quicksilver',
-            \ ],
-        \ 'vim': [
-            \ 'reload',
-            \ 'vim-dev-plugin',
+            \ 'delimitMate',
+            \ 'fugitive',
+            \ 'unimpaired',
+            \ 'scratch',
+            \ 'tabular',
+            \ 'markdown',
             \ ],
         \ 'python': [
+            \ 'flake8',
             \ 'pep83160',
             \ 'pyflakes2441',
             \ ],
@@ -27,10 +29,12 @@ fun! vim_config_garbas#plugins(features)
             \ 'javaScriptLint',
             \ 'jQuery',
             \ ],
-        \ 'nix' : [
-            \ 'vim-addon-nix',
+        \ 'web': [
+            \ 'css-color',
             \ ],
         \ }
+""        \ 'ack',
+""        \ 'SuperTab_continued.',
 
     let activate = []
     for [k,v] in items(plugins)
@@ -47,18 +51,26 @@ fun! vim_config_garbas#plugins(features)
         \ 'known_repos_activation_policy': 'ask',
         \ })
 
-    colorscheme wombat256mod
-    nnoremap <LEADER>w gqip
+    call togglebg#map("<LEADER>c")
+    let g:solarized_termcolors=256
+    colorscheme solarized
 
-    map <LEADER>a :Ack<SPACE>
+    nnoremap <LEADER>w gqip
     map <LEADER>tt <Plug>TaskList
     map <LEADER>g :GundoToggle<CR>
+
+    let g:buffergator_sort_regime = 'mru'
+    let g:buffergator_viewport_split_policy = 'T'
 
     let g:gist_detect_filetype = 1  " detect filetype from filename
     let g:gist_open_browser_after_post = 1  " open browser after the post
 
     if (type(a:features) == type([]) && index(a:features, 'python') != -1)
             \ || (type(a:features) == type('') && a:features == 'all')
+
+        au BufNewFile,BufRead *.pt set filetype=html.pt
+        au BufNewFile,BufRead *.zcml set filetype=xml.zcml
+
         let g:pep8_map='<LEADER>8'
 
         let python_highlight_all=1  "highlight all python syntax
@@ -78,7 +90,6 @@ endfun
 fun! vim_config_garbas#config(features)
 
     "" GENERAL - I think we can all agree this would be nice default
-    let mapleader=","
     set nomodeline  " FreeBSD security advisory for this one...
     set enc=utf-8  " set the default encoding
     set title  " set the title of the window
@@ -97,6 +108,9 @@ fun! vim_config_garbas#config(features)
     if has('mouse')
         set mouse=a  " have the mouse enabled all the time
         set mousemodel=popup " make a menu popup on right click
+    endif
+    if has('gui_running')
+        set go-=T
     endif
     set hidden  " allow for switching buffers when a file has changes
     set t_vb=  " make sure the bell shuts up
@@ -135,6 +149,12 @@ fun! vim_config_garbas#config(features)
     set smartcase  " unless they contain upper-case letters
     set nospell
     set wildignore+=*.o,*.obj,*.pyc,*.pyo,.git,.svn,.hg
+    set t_Co=256
+    set background=dark
+
+    "" http://ilker.de/specific-vim-settings-per-project-
+    set exrc
+    set secure
 
     "" STRIP TRAILING WHITESPACE
     fun! Preserve(command)
@@ -153,7 +173,6 @@ fun! vim_config_garbas#config(features)
     nmap <LEADER>W :call Preserve("%s/\\s\\+$//e")<CR>
     map <SILENT> <LEADER>s :set spell!<CR>
     map <SILENT> <LEADER>h :set hlsearch!<CR>¬
-    map <LEADER>a :Ack<SPACE>
     map <SILENT> <LEADER>n :set number!<CR>
 
 
