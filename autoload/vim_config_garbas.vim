@@ -2,28 +2,42 @@
 
 fun! vim_config_garbas#plugins(features)
 
+"" TODO:
+"" - http://peterodding.com/code/vim/easytags/
+"" - http://peterodding.com/code/vim/shell
+""
+"" REMOVED:
+""            \ 'ack',
+""            \ 'SuperTab_continued.',
+""            \ 'extradite', -> http://int3.github.com/vim-extradite/
+""            \ 'quicksilver',
+""            \ 'pep83160',
+""            \ 'pyflakes2441',
+""            \ 'taglist-plus',
+
     let plugins = {
         \ 'always': [
             \ 'snipmate',
             \ 'snipmate-snippets',
+            \ 'AutoComplPop',
             \ 'Gist',
             \ 'Gundo',
             \ 'Solarized',
             \ 'Syntastic',
             \ 'TaskList',
             \ 'buffergator',
-            \ 'quicksilver',
+            \ 'FuzzyFinder',
             \ 'delimitMate',
             \ 'fugitive',
             \ 'unimpaired',
             \ 'scratch',
             \ 'tabular',
             \ 'markdown',
+            \ 'proj',
+            \ 'tagbar',
             \ ],
         \ 'python': [
             \ 'flake8',
-            \ 'pep83160',
-            \ 'pyflakes2441',
             \ ],
         \ 'javascript': [
             \ 'javaScriptLint',
@@ -31,10 +45,10 @@ fun! vim_config_garbas#plugins(features)
             \ ],
         \ 'web': [
             \ 'css-color',
+            \ 'vim-less',
+            \ 'html5',
             \ ],
         \ }
-""        \ 'ack',
-""        \ 'SuperTab_continued.',
 
     let activate = []
     for [k,v] in items(plugins)
@@ -52,13 +66,99 @@ fun! vim_config_garbas#plugins(features)
         \ })
 
     call togglebg#map("<LEADER>c")
-    let g:solarized_termcolors=256
+    let g:solarized_termcolors = 256
+    let g:solarized_hitrail = 1
+    let g:solarized_diffmode = "normal"
     colorscheme solarized
 
     nnoremap <LEADER>w gqip
     map <LEADER>tt <Plug>TaskList
-    map <LEADER>g :GundoToggle<CR>
+    "map <LEADER>g :GundoToggle<CR>
 
+    "" FUGITIVE SHORTCUTS
+    map <LEADER>gg :Git
+    map <LEADER>gr :Gremove
+    map <LEADER>gm :Gmove
+    map <LEADER>s :Gstatus<CR>
+    map <LEADER>d :Gdiff<CR>
+    "set statusline=%F%m%r%h%w %{fugitive#statusline()} [%{strlen(&fenc)?&fenc:&enc}] [line\ %l\/%L] 
+
+    let g:ProjFileBrowser = 'off'
+
+    if exists(":Tabularize")
+        nmap <LEADER>a= :Tabularize /=<CR>
+        vmap <LEADER>a= :Tabularize /=<CR>
+        nmap <LEADER>a: :Tabularize /:\zs<CR>
+        vmap <LEADER>a: :Tabularize /:\zs<CR>
+    endif
+
+    let Tlist_Use_Right_Window = 1
+    " only show the current buffer, fold the rest
+    let Tlist_File_Fold_Auto_Close = 1
+    " show the name in the ctags list, helps with zope stuff :)
+    let tlist_xml_settings = 'zcml;n:name,g:profile,p:permission,h:handler,m:component,f:factory,c:class,i:id,s:schema,t:type'
+    let tlist_cfg_settings = 'ini;s:section'
+    let tlist_markdown_settings = 'markdown;h:header'
+
+    " Tagbar {{{2
+    " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    nnoremap tt :TagbarToggle<CR>
+    
+    " ZCML type
+    " XXX: This doesn't currently work because I use a filetype setting
+    " of "xml.zcml".
+    let g:tagbar_type_zcml = {
+        \ 'ctagstype': 'zcml',
+        \ 'kinds': [
+            \ 'n:name',
+            \ 'g:profile',
+            \ 'p:permission',
+            \ 'h:handler',
+            \ 'm:component',
+            \ 'f:factory',
+            \ 'c:class',
+            \ 'i:id',
+            \ 's:schema'
+        \ ]
+    \}
+    " cfg file type
+    let g:tagbar_type_cfg = {
+        \ 'ctagstype': 'ini',
+        \ 'kinds': ['s:section']
+    \ }
+    " Markdown type
+    let g:tagbar_type_markdown = {
+        \ 'ctagstype': 'markdown',
+        \ 'kinds': ['h:header']
+    \ }
+
+    " Fuzzy Finder {{{2
+    " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    " max results, lot o' files in a buildout :)
+    let g:fuzzy_ceiling=35000
+    " show full paths
+    let g:fuzzy_path_display = 'highlighted_path'
+    " ignored files
+    let g:fuzzy_ignore = "*.png;*.PNG;*.pyc;*.pyo;*.JPG;*.jpg;*.GIF;*.gif;.svn/**;.git/**;*.mo;.DS_Store;.AppleDouble"
+    " available modes
+    let g:FuzzyFinderOptions = {
+        \'File': {'mode_available': 1},
+        \'Buffer': {'mode_available': 0},
+        \'Dir': {'mode_available': 0},
+        \'MruFile': {'mode_available': 0},
+        \'MruCmd': {'mode_available': 0},
+        \'Bookmark': {'mode_available': 0},
+        \}
+    " Don't delete a full path when using backspace in file mode
+    let g:FuzzyFinderOptions.File.smart_bs = 0
+    
+    " Shortcuts for opening fuzzy finder
+    nmap <LEADER>f :FufFile<SPACE>**/<CR>
+    nmap <LEADER>F :FufRenewCache<CR>
+    "nmap <leader>t :FufCoverageFile<Space>
+    "nmap <leader>ft :FufTag<Space>
+    
     let g:buffergator_sort_regime = 'mru'
     let g:buffergator_viewport_split_policy = 'T'
 
@@ -71,12 +171,12 @@ fun! vim_config_garbas#plugins(features)
         au BufNewFile,BufRead *.pt set filetype=html.pt
         au BufNewFile,BufRead *.zcml set filetype=xml.zcml
 
-        let g:pep8_map='<LEADER>8'
 
         let python_highlight_all=1  "highlight all python syntax
-        highlight SpellBad term=underline gui=undercurl guisp=Red
-        let g:pyflakes_use_quickfix = 0
-        au FileType python map <buffer> <LEADER>8 :call Pep8()<CR>
+        "highlight SpellBad term=underline gui=undercurl guisp=Red
+        "let g:pyflakes_use_quickfix = 1
+        "let g:pep8_map='<LEADER>8'
+        "au FileType python map <buffer> <LEADER>8 :call Pep8()<CR>
     endif
 
     if (type(a:features) == type([]) && index(a:features, 'javascript') != -1)
@@ -110,7 +210,21 @@ fun! vim_config_garbas#config(features)
         set mousemodel=popup " make a menu popup on right click
     endif
     if has('gui_running')
+        
         set go-=T
+
+        if has("gui_macvim")
+            " use the whole screen
+            "set fuoptions=maxvert,maxhorz
+            " use Monaco with no antialiasing
+            set guifont=Inconsolata-dz:h10,Inconsolata:h12,Monaco:h10
+            set antialias
+            " maybe set the transparency
+            " XXX: getting annoyed by the transparency
+            "set transparency=2
+            " turn off transparency
+            noremap <leader>TT :set transparency=0<CR>
+        endif
     endif
     set hidden  " allow for switching buffers when a file has changes
     set t_vb=  " make sure the bell shuts up
@@ -139,6 +253,7 @@ fun! vim_config_garbas#config(features)
     match ErrorMsg '\%>80v.+'
     set formatoptions=qrnl
     set number  " turn on line numbers¬
+    set cul cuc " enable line & columns highlighting
     set list
     nnoremap / /\v
     vnoremap / /\v
@@ -175,6 +290,13 @@ fun! vim_config_garbas#config(features)
     map <SILENT> <LEADER>h :set hlsearch!<CR>¬
     map <SILENT> <LEADER>n :set number!<CR>
 
+    autocmd FileType python set omnifunc=pythoncomplete#Complete
+    autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+    autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+    autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+    autocmd FileType c set omnifunc=ccomplete#Complete
 
     if (type(a:features) == type([]) && index(a:features, 'textmate') != -1)
             \ || (type(a:features) == type('') && a:features == 'all')
@@ -212,5 +334,14 @@ fun! vim_config_garbas#config(features)
         inoremap jj <ESC>
 
     endif
+
+    " Show syntax highlighting groups for word under cursor
+    nmap <C-S-P> :call <SID>SynStack()<CR>
+    function! <SID>SynStack()
+        if !exists("*synstack")
+            return
+        endif
+        echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+    endfunc
 
 endfun
