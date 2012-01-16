@@ -40,11 +40,11 @@ fun! vim_config_garbas#plugins(features)
             \ 'flake8',
             \ ],
         \ 'javascript': [
-            \ 'javaScriptLint',
+            \ 'jshint',
             \ 'jQuery',
             \ ],
         \ 'web': [
-            \ 'css-color',
+            \ 'css_color@skammer',
             \ 'vim-less',
             \ 'html5',
             \ ],
@@ -68,7 +68,7 @@ fun! vim_config_garbas#plugins(features)
     call togglebg#map("<LEADER>c")
     let g:solarized_termcolors = 256
     let g:solarized_hitrail = 1
-    let g:solarized_diffmode = "normal"
+    let g:solarized_diffmode = "high"
     colorscheme solarized
 
     nnoremap <LEADER>w gqip
