@@ -1,347 +1,809 @@
-"" inspired by https://github.com/MarcWeber/vim-addon-MarcWeber/blob/master/autoload/vim_addon_MarcWeber.vim
+" .vimrc
+" Author: Rok Garbas <rok@garbas.si>
+" Source: http://github.com/garbas/vim-config-garbas
+"
 
-fun! vim_config_garbas#plugins(features)
+fun! vim_config_garbas#config(category)
 
-"" TODO:
-"" - http://peterodding.com/code/vim/easytags/
-"" - http://peterodding.com/code/vim/shell
-""
-"" REMOVED:
-""            \ 'ack',
-""            \ 'SuperTab_continued.',
-""            \ 'extradite', -> http://int3.github.com/vim-extradite/
-""            \ 'quicksilver',
-""            \ 'pep83160',
-""            \ 'pyflakes2441',
-""            \ 'taglist-plus',
+" Addons (VIM) ------------------------------------------------------------ {{{
 
-    let plugins = {
-        \ 'always': [
-            \ 'snipmate',
-            \ 'snipmate-snippets',
-            \ 'AutoComplPop',
-            \ 'Gist',
-            \ 'Gundo',
-            \ 'Solarized',
-            \ 'Syntastic',
-            \ 'TaskList',
-            \ 'buffergator',
-            \ 'FuzzyFinder',
-            \ 'delimitMate',
-            \ 'fugitive',
-            \ 'unimpaired',
-            \ 'scratch',
-            \ 'tabular',
-            \ 'markdown',
-            \ 'proj',
-            \ 'tagbar',
-            \ ],
-        \ 'python': [
-            \ 'flake8',
-            \ ],
-        \ 'javascript': [
-            \ 'jshint',
-            \ 'jQuery',
-            \ ],
-        \ 'web': [
-            \ 'css_color@skammer',
-            \ 'vim-less',
-            \ 'html5',
-            \ ],
+let addons = [
+    \ ['snipmate', ['default']],
+    \ ['snipmate-snippets', ['default']],
+    \ ['AutoComplPop', ['default']],
+        \ ['L9', ['default']],
+    \ ['Syntastic', ['default']],
+    \ ['delimitMate', ['default']],
+    \ ['unimpaired', ['default']],
+    \ ['scratch', ['default']],
+    \ ['tabular', ['default']],
+    \ ['markdown', ['default']],
+    \ ['molokai', ['default']],
+    \ ['utl', ['default']],
+    \ ['flake8', ['python']],
+    \ ['jshint', ['javascript']],
+    \ ['jQuery', ['javascript']],
+    \ ['css_color@skammer', ['web']],
+    \ ['vim-less', ['web']],
+    \ ['html5', ['web']],
+    \ ]
+
+" ADDONS:
+" Python-mode {{{
+
+function! Addons_Python_mode_klen ()
+    let g:pymode_doc = 0
+    let g:pymode_run = 0
+    let g:pymode_lint = 0
+    let g:pymode_breakpoint = 0
+    let g:pymode_syntax = 0
+    let g:pymode_utils_whitespaces = 0
+    let g:pymode_virtualenv = 0
+    let g:pymode_options_indent = 0
+    let g:pymode_options_fold = 0
+    let g:pymode_options_other = 0
+
+    let g:pymode_rope = 1
+    let g:pymode_rope_global_prefix = "<localleader>R"
+    let g:pymode_rope_local_prefix = "<localleader>r"
+    "let g:pymode_rope_auto_project = 1
+    "let g:pymode_rope_enable_autoimport = 0
+    "let g:pymode_rope_autoimport_generate = 1
+    "let g:pymode_rope_autoimport_underlineds = 0
+    "let g:pymode_rope_codeassist_maxfixes = 10
+    "let g:pymode_rope_sorted_completions = 1
+    "let g:pymode_rope_extended_complete = 1
+    "let g:pymode_rope_autoimport_modules = ["os", "shutil", "datetime"]
+    "let g:pymode_rope_confirm_saving = 1
+    "let g:pymode_rope_vim_completion = 1
+    "let g:pymode_rope_guess_project = 1
+    "let g:pymode_rope_goto_def_newwin = 0
+    "let g:pymode_rope_always_show_complete_menu = 0
+endfunction
+
+call extend(addons, [['Python-mode-klen', ['default'], 'Addons_Python_mode_klen']])
+
+" }}}
+" Syntastic {{{
+
+function! Addons_Syntastic ()
+    let g:syntastic_check_on_open=1
+    let g:syntastic_auto_jump=0
+    let g:syntastic_javascript_checker = 'jshint'
+    let g:syntastic_stl_format = '[%E{%e Errors}%B{, }%W{%w Warnings}]'
+endfunction
+
+call extend(addons, [['Syntastic', ['default'], 'Addons_Syntastic']])
+
+" }}}
+" Gundo {{{
+
+function! Addons_Gundo ()
+    nnoremap <F5> :GundoToggle<CR>
+    let g:gundo_debug = 1
+    let g:gundo_preview_bottom = 1
+    map <leader>G :gundotoggle<cr>
+endfunction
+
+call extend(addons, [['Gundo', ['default'], 'Addons_Gundo']])
+
+" }}}
+" Powerline {{{
+
+function! Addons_powerline ()
+    let g:Powerline_symbols = 'fancy'
+endfunction
+
+call extend(addons, [['powerline', ['default'], 'Addons_powerline']])
+
+" }}}
+" Ctrl-P {{{
+
+function! Addons_ctrlp()
+    let g:ctrlp_dont_split = 'NERD_tree_2'
+    let g:ctrlp_jump_to_buffer = 0
+    let g:ctrlp_map = '<leader>,'
+    let g:ctrlp_working_path_mode = 0
+    let g:ctrlp_match_window_reversed = 1
+    let g:ctrlp_split_window = 0
+    let g:ctrlp_max_height = 20
+    let g:ctrlp_extensions = ['tag']
+
+    let g:ctrlp_prompt_mappings = {
+        \ 'PrtSelectMove("j")':   ['<c-j>', '<down>', '<s-tab>'],
+        \ 'PrtSelectMove("k")':   ['<c-k>', '<up>', '<tab>'],
+        \ 'PrtHistory(-1)':       ['<c-n>'],
+        \ 'PrtHistory(1)':        ['<c-p>'],
+        \ 'ToggleFocus()':        ['<c-tab>'],
         \ }
 
-    let activate = []
-    for [k,v] in items(plugins)
-        if k == 'always'
-           \ || (type(a:features) == type([]) && index(a:features, k) >= 0)
-           \ || (type(a:features) == type('') && a:features == 'all')
-            call extend(activate, v)
+    nnoremap <leader>. :CtrlPTag<cr>
+endfunction
+
+call extend(addons, [['ctrlp', ['default'], 'Addons_ctrlp']])
+
+" }}}
+" vim-orgmode {{{
+
+function! Addons_orgmode ()
+    "let g:org_plugins = ['ShowHide', '|', 'Navigator', 'EditStructure', '|', 'Todo', 'Date', 'Misc']
+    "let g:org_todo_keywords = ['TODO', '|', 'DONE']
+    let g:org_debug = 1
+endfunction
+
+call extend(addons, [['vim-orgmode', ['default'], 'Addons_orgmode']])
+
+" }}}
+" Gist {{{
+
+function! Addons_Gist ()
+    let g:gist_detect_filetype = 1  " detect filetype from filename
+    let g:gist_open_browser_after_post = 1  " open browser after the post
+endfunction
+
+call extend(addons, [['Gist', ['default'], 'Addons_Gist']])
+
+" }}}
+" proj {{{
+
+function! Addons_proj ()
+    let g:ProjFileBrowser = 'off'
+endfunction
+
+call extend(addons, [['proj', ['default'], 'Addons_proj']])
+
+" }}}
+" fugitive {{{
+
+function! Addons_fugitive ()
+    map <LEADER>gg :Git
+    map <LEADER>gr :Gremove
+    map <LEADER>gm :Gmove
+    map <LEADER>s :Gstatus<CR>
+    map <LEADER>d :Gdiff<CR>
+    "set statusline=%F%m%r%h%w %{fugitive#statusline()} [%{strlen(&fenc)?&fenc:&enc}] [line\ %l\/%L]
+endfunction
+
+call extend(addons, [['fugitive', ['default'], 'Addons_fugitive']])
+
+" }}}
+" TaskList {{{
+
+function! Addons_TaskList ()
+    map <LEADER>tt <Plug>TaskList
+endfunction
+
+call extend(addons, [['TaskList', ['default'], 'Addons_TaskList']])
+
+" }}}
+" Solarized {{{
+
+function! Addons_Solarized ()
+    call togglebg#map("<LEADER>c")
+    let g:solarized_termcolors = 256
+    let g:solarized_hitrail = 1
+    let g:solarized_diffmode = "high"
+endfunction
+
+call extend(addons, [['Solarized', ['default'], 'Addons_Solarized']])
+
+" }}}
+
+" Here we initialize above addons setting and we only load plugins for category
+" provided
+let addons_to_activate = []
+let settings_to_activate = []
+for addon in addons
+
+    if (index(addon[1], a:category) != -1) || (a:category == 'default')
+        call extend(addons_to_activate, [addon[0]])
+        if exists("addon[2]")
+            call extend(settings_to_activate, [addon[2]])
         endif
-    endfor
-    call vam#ActivateAddons(activate, {
+    endif
+
+endfor
+
+call vam#ActivateAddons(addons_to_activate, {
         \ 'auto_install': 1,
         \ 'plugin_root_dir': $HOME.'/.vim/addons',
         \ 'scm_merge_stategy': 'force',
         \ 'known_repos_activation_policy': 'ask',
         \ })
 
-    call togglebg#map("<LEADER>c")
-    let g:solarized_termcolors = 256
-    let g:solarized_hitrail = 1
-    let g:solarized_diffmode = "high"
-    colorscheme solarized
+for addon_function in settings_to_activate
+    :call call(function(addon_function), [])
+endfor
 
-    nnoremap <LEADER>w gqip
-    map <LEADER>tt <Plug>TaskList
-    "map <LEADER>g :GundoToggle<CR>
+" }}}
+" Basic options ----------------------------------------------------------- {{{
+" General options {{{
+set nocompatible
+set encoding=utf-8
+set modelines=0
+set autoindent
+set showmode
+set showcmd
+set hidden
+set visualbell
+set cursorline
+set ttyfast
+set ruler
+set backspace=indent,eol,start
+set number
+set norelativenumber
+set laststatus=2
+set history=1000
+set undofile
+set undoreload=10000
+set cpoptions+=J
+set list
+set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
+set shell=/bin/bash
+set lazyredraw
+set matchtime=3
+set showbreak=↪
+set splitbelow
+set splitright
+set fillchars=diff:⣿
+set ttimeout
+set notimeout
+set nottimeout
+set autowrite
+set shiftround
+set autoread
+set title
+set linebreak
+"set dictionary=/usr/share/dict/words
+set completeopt=longest,menuone,preview  " Better Completion
+set pastetoggle=<F2>  " Toggle paste
 
-    "" FUGITIVE SHORTCUTS
-    map <LEADER>gg :Git
-    map <LEADER>gr :Gremove
-    map <LEADER>gm :Gmove
-    map <LEADER>s :Gstatus<CR>
-    map <LEADER>d :Gdiff<CR>
-    "set statusline=%F%m%r%h%w %{fugitive#statusline()} [%{strlen(&fenc)?&fenc:&enc}] [line\ %l\/%L] 
+" Make Vim able to edit crontab files again.
+set backupskip=/tmp/*,/private/tmp/*"
 
-    let g:ProjFileBrowser = 'off'
+" Save when losing focus
+au FocusLost * :wa
 
-    if exists(":Tabularize")
-        nmap <LEADER>a= :Tabularize /=<CR>
-        vmap <LEADER>a= :Tabularize /=<CR>
-        nmap <LEADER>a: :Tabularize /:\zs<CR>
-        vmap <LEADER>a: :Tabularize /:\zs<CR>
+" Resize splits when the window is resized
+au VimResized * exe "normal! \<c-w>="
+
+" set all window splits equal
+set equalalways
+
+" }}}
+" Wildmenu completion {{{
+
+set wildmenu
+set wildmode=list:longest
+
+set wildignore+=.hg,.git,.svn                    " Version control
+set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+set wildignore+=*.spl                            " compiled spelling word lists
+set wildignore+=*.sw?                            " Vim swap files
+set wildignore+=*.DS_Store                       " OSX bullshit
+
+set wildignore+=*.luac                           " Lua byte code
+
+set wildignore+=migrations                       " Django migrations
+set wildignore+=*.pyc                            " Python byte code
+
+set wildignore+=*.orig                           " Merge resolution files
+
+" Clojure/Leiningen
+set wildignore+=classes
+set wildignore+=lib
+
+" }}}
+" Line Return {{{
+
+" Make sure Vim returns to the same line when you reopen a file.
+" Thanks, Amit
+augroup line_return
+    au!
+    au BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \     execute 'normal! g`"zvzz' |
+        \ endif
+augroup END
+
+" }}}
+" Tabs, spaces, wrapping {{{
+
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set wrap
+set textwidth=79
+set formatoptions=qrn1
+set colorcolumn=+1
+
+" }}}
+" Backups {{{
+
+set backupdir=~/.vim/tmp/backup// " backups
+set backupskip=/tmp/*,/private/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*¬
+set undodir=~/.vim/tmp/undo//     " undo files
+set directory=~/.vim/tmp/swap//   " swap files
+set backup                        " enable backups
+set noswapfile                    " It's 2012, Vim.
+
+" }}}
+" Color scheme {{{
+
+syntax on
+colorscheme molokai
+"colorscheme solarized
+set background=dark
+
+" Highlight VCS conflict markers
+match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+
+" Highlight lines that are longer then 80
+match ErrorMsg '\%>80v.+'
+
+" }}}
+" }}}
+" Searching and movement -------------------------------------------------- {{{
+" General {{{
+
+" Use sane regexes.
+nnoremap / /\v
+vnoremap / /\v
+
+set ignorecase
+set smartcase
+set incsearch
+set showmatch
+set hlsearch
+set gdefault
+
+set scrolloff=3
+set sidescroll=1
+set sidescrolloff=10
+
+set virtualedit+=block
+
+noremap <leader><space> :noh<cr>:call clearmatches()<cr>
+
+runtime macros/matchit.vim
+map <tab> %
+
+" Made D behave
+nnoremap D d$
+
+" Keep search matches in the middle of the window and pulse the line when moving
+" to them.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Don't move on *
+nnoremap * *<c-o>
+
+" Same when jumping around
+nnoremap g; g;zz
+nnoremap g, g,zz
+
+" Window resizing
+nnoremap <c-left> 5<c-w>>
+nnoremap <c-right> 5<c-w><
+
+" Easier to type, and I never use the default behavior.
+noremap H ^
+noremap L g_
+
+" Heresy
+inoremap <c-a> <esc>I
+inoremap <c-e> <esc>A
+
+" Open a Quickfix window for the last search.
+nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
+
+" Ack for the last search.
+nnoremap <silent> <leader>? :execute "Ack! '" . substitute(substitute(substitute(@/, "\\\\<", "\\\\b", ""), "\\\\>", "\\\\b", ""), "\\\\v", "", "") . "'"<CR>
+
+" Fix linewise visual selection of various text objects
+nnoremap VV V
+nnoremap Vit vitVkoj
+nnoremap Vat vatV
+nnoremap Vab vabV
+nnoremap VaB vaBV
+
+" }}}
+" Error navigation {{{
+"
+"             Location List     QuickFix Window
+"            (e.g. Syntastic)     (e.g. Ack)
+"            ----------------------------------
+" Next      |     M-j               M-Down     |
+" Previous  |     M-k                M-Up      |
+"            ----------------------------------
+"
+nnoremap ∆ :lnext<cr>zvzz
+nnoremap ˚ :lprevious<cr>zvzz
+inoremap ∆ <esc>:lnext<cr>zvzz
+inoremap ˚ <esc>:lprevious<cr>zvzz
+nnoremap <m-Down> :cnext<cr>zvzz
+nnoremap <m-Up> :cprevious<cr>zvzz
+
+" }}}
+" Directional Keys {{{
+
+" It's 2011.
+noremap j gj
+noremap k gk
+
+" Easy buffer navigation
+noremap <C-h>  <C-w>h
+noremap <C-j>  <C-w>j
+noremap <C-k>  <C-w>k
+noremap <C-l>  <C-w>l
+noremap <leader>v <C-w>v
+
+" }}}
+" Highlight word {{{
+
+nnoremap <silent> <leader>hh :execute 'match InterestingWord1 /\<<c-r><c-w>\>/'<cr>
+nnoremap <silent> <leader>h1 :execute 'match InterestingWord1 /\<<c-r><c-w>\>/'<cr>
+nnoremap <silent> <leader>h2 :execute '2match InterestingWord2 /\<<c-r><c-w>\>/'<cr>
+nnoremap <silent> <leader>h3 :execute '3match InterestingWord3 /\<<c-r><c-w>\>/'<cr>
+
+" }}}
+" Visual Mode */# from Scrooloose {{{
+
+function! s:VSetSearch()
+  let temp = @@
+  norm! gvy
+  let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
+  let @@ = temp
+endfunction
+
+vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR><c-o>
+vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR><c-o>
+
+" }}}
+" }}}
+" Folding ----------------------------------------------------------------- {{{
+
+set foldlevelstart=0
+
+" Space to toggle folds.
+nnoremap <Space> za
+vnoremap <Space> za
+
+" Make zO recursively open whatever top level fold we're in, no matter where the
+" cursor happens to be.
+nnoremap zO zCzO
+
+" Use ,z to "focus" the current fold.
+nnoremap <leader>z zMzvzz
+
+function! MyFoldText() " {{{
+    let line = getline(v:foldstart)
+
+    let nucolwidth = &fdc + &number * &numberwidth
+    let windowwidth = winwidth(0) - nucolwidth - 3
+    let foldedlinecount = v:foldend - v:foldstart
+
+    " expand tabs into spaces
+    let onetab = strpart('          ', 0, &tabstop)
+    let line = substitute(line, '\t', onetab, 'g')
+
+    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+    let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
+    return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
+endfunction " }}}
+set foldtext=MyFoldText()
+
+" }}}
+" Destroy infuriating keys ------------------------------------------------ {{{
+
+" Fuck you, help key.
+noremap  <F1> :set invfullscreen<CR>
+inoremap <F1> <ESC>:set invfullscreen<CR>a
+
+" Fuck you too, manual key.
+nnoremap K <nop>
+
+" Stop it, hash key.
+inoremap # X<BS>#
+
+" Use L, dammit.
+nnoremap Ajk <nop>
+nnoremap A<esc> <nop>
+
+" }}}
+" Various filetype-specific stuff ----------------------------------------- {{{
+" C {{{
+
+augroup ft_c
+    au!
+    au FileType c setlocal foldmethod=syntax
+augroup END
+
+" }}}
+" CSS and LessCSS {{{
+
+augroup ft_css
+    au!
+
+    au BufNewFile,BufRead *.less setlocal filetype=less
+
+    au Filetype less,css setlocal foldmethod=marker
+    au Filetype less,css setlocal foldmarker={,}
+    au Filetype less,css setlocal omnifunc=csscomplete#CompleteCSS
+    au Filetype less,css setlocal iskeyword+=-
+
+    " Use <leader>S to sort properties. Turns this:
+    "
+    " p {
+    " width: 200px;
+    " height: 100px;
+    " background: red;
+    "
+    " ...
+    " }
+    "
+    " into this:
+    "
+    " p {
+    " background: red;
+    " height: 100px;
+    " width: 200px;
+    "
+    " ...
+    " }
+    au BufNewFile,BufRead *.less,*.css nnoremap <buffer> <localleader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
+
+    " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
+    " positioned inside of them AND the following code doesn't get unfolded.
+    au BufNewFile,BufRead *.less,*.css inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
+augroup END
+
+" }}}
+" HTML {{{
+
+augroup ft_html
+    au!
+
+    au BufNewFile,BufRead *.html setlocal filetype=html
+    au FileType html setlocal foldmethod=manual
+
+    " Use <localleader>f to fold the current tag.
+    au FileType html nnoremap <buffer> <localleader>f Vatzf
+
+    " Use Shift-Return to turn this:
+    " <tag>|</tag>
+    "
+    " into this:
+    " <tag>
+    " |
+    " </tag>
+    au FileType html nnoremap <buffer> <s-cr> vit<esc>a<cr><esc>vito<esc>i<cr><esc>
+
+    " Smarter pasting
+    au FileType html nnoremap <buffer> p :<C-U>YRPaste 'p'<CR>v`]=`]
+    au FileType html nnoremap <buffer> P :<C-U>YRPaste 'P'<CR>v`]=`]
+    au FileType html nnoremap <buffer> π :<C-U>YRPaste 'p'<CR>
+    au FileType html nnoremap <buffer> ∏ :<C-U>YRPaste 'P'<CR>
+
+augroup END
+
+" }}}
+" Javascript {{{
+
+augroup ft_javascript
+    au!
+
+    au FileType javascript setlocal foldmethod=marker
+    au FileType javascript setlocal foldmarker={,}
+
+    au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
+
+augroup END
+
+" }}}
+" Lisp {{{
+
+augroup ft_lisp
+    au!
+    au FileType lisp call TurnOnLispFolding()
+augroup END
+
+" }}}
+" Markdown {{{
+
+augroup ft_markdown
+    au!
+
+    au BufNewFile,BufRead *.m*down setlocal filetype=markdown
+
+    " Use <localleader>1/2/3 to add headings.
+    au Filetype markdown nnoremap <buffer> <localleader>1 yypVr=
+    au Filetype markdown nnoremap <buffer> <localleader>2 yypVr-
+    au Filetype markdown nnoremap <buffer> <localleader>3 I### <ESC>
+augroup END
+
+" }}}
+" Nginx {{{
+
+augroup ft_nginx
+    au!
+
+    au BufNewFile,BufRead /etc/nginx/conf/* set ft=nginx
+    au BufNewFile,BufRead /etc/nginx/sites-available/* set ft=nginx
+    au BufNewFile,BufRead /usr/local/etc/nginx/sites-avaialble/* set ft=nginx
+    au BufNewFile,BufRead vhost.ngingx set ft=nginx
+
+    au FileType nginx setlocal foldmethod=marker foldmarker={,}
+augroup END
+
+" }}}
+" OrgMode {{{
+
+augroup ft_org
+    au!
+
+    au Filetype org nmap <buffer> Q vahjgq
+augroup END
+
+" }}}
+" Python {{{
+
+augroup ft_python
+    au!
+
+    "au FileType python noremap <buffer> <localleader>rr :RopeRename<CR>
+    "au FileType python vnoremap <buffer> <localleader>rm :RopeExtractMethod<CR>
+    "au FileType python noremap <buffer> <localleader>ri :RopeOrganizeImports<CR>
+
+    au FileType python setlocal omnifunc=pythoncomplete#Complete
+    au FileType python setlocal define=^\s*\\(def\\\\|class\\)
+    "au FileType python compiler unit2
+    "au FileType man nnoremap <buffer> <cr> :q<cr>
+augroup END
+
+" }}}
+" ReStructuredText {{{
+
+augroup ft_rest
+    au!
+
+    au FileType rst nnoremap <buffer> <localleader>1 yypVr=
+    au FileType rst nnoremap <buffer> <localleader>2 yypVr-
+    au FileType rst nnoremap <buffer> <localleader>3 yypVr~
+    au FileType rst nnoremap <buffer> <localleader>4 yypVr`
+augroup END
+
+" }}}
+" Vim {{{
+
+augroup ft_vim
+    au!
+
+    au FileType vim setlocal foldmethod=marker
+    au FileType help setlocal textwidth=78
+    au BufWinEnter *.txt if &ft == 'help' | wincmd L | endif
+augroup END
+
+" }}}
+" }}}
+" Convenience mappings ----------------------------------------------------- {{{
+
+nmap <LEADER>L :set list!<CR>
+map <SILENT> <LEADER>S :set spell!<CR>
+map <SILENT> <LEADER>H :set hlsearch!<CR>¬
+map <SILENT> <LEADER>N :set number!<CR>
+
+" Clean whitespace
+map <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+
+" Change case
+nnoremap <C-u> gUiw
+inoremap <C-u> <esc>gUiwea
+
+" Emacs bindings in command line mode
+cnoremap <c-a> <home>
+cnoremap <c-e> <end>
+
+" Formatting, TextMate-style
+nnoremap <leader>w gqip
+
+" Align text
+nnoremap <leader>Al :left<cr>
+nnoremap <leader>Ac :center<cr>
+nnoremap <leader>Ar :right<cr>
+vnoremap <leader>Al :left<cr>
+vnoremap <leader>Ac :center<cr>
+vnoremap <leader>Ar :right<cr>
+
+" Less chording
+nnoremap ; :
+
+" Faster Esc
+inoremap jj <esc>
+
+" Marks and Quotes
+noremap ' `
+noremap æ '
+noremap ` <C-^>
+
+" Calculator
+inoremap <C-B> <C-O>yiW<End>=<C-R>=<C-R>0<CR>
+
+" Show syntax highlighting groups for word under cursor
+nmap <C-S-P> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+    if !exists("*synstack")
+        return
     endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 
-    let Tlist_Use_Right_Window = 1
-    " only show the current buffer, fold the rest
-    let Tlist_File_Fold_Auto_Close = 1
-    " show the name in the ctags list, helps with zope stuff :)
-    let tlist_xml_settings = 'zcml;n:name,g:profile,p:permission,h:handler,m:component,f:factory,c:class,i:id,s:schema,t:type'
-    let tlist_cfg_settings = 'ini;s:section'
-    let tlist_markdown_settings = 'markdown;h:header'
+" }}}
+" GUI {{{
 
-    " Tagbar {{{2
-    " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    nnoremap tt :TagbarToggle<CR>
-    
-    " ZCML type
-    " XXX: This doesn't currently work because I use a filetype setting
-    " of "xml.zcml".
-    let g:tagbar_type_zcml = {
-        \ 'ctagstype': 'zcml',
-        \ 'kinds': [
-            \ 'n:name',
-            \ 'g:profile',
-            \ 'p:permission',
-            \ 'h:handler',
-            \ 'm:component',
-            \ 'f:factory',
-            \ 'c:class',
-            \ 'i:id',
-            \ 's:schema'
-        \ ]
-    \}
-    " cfg file type
-    let g:tagbar_type_cfg = {
-        \ 'ctagstype': 'ini',
-        \ 'kinds': ['s:section']
-    \ }
-    " Markdown type
-    let g:tagbar_type_markdown = {
-        \ 'ctagstype': 'markdown',
-        \ 'kinds': ['h:header']
-    \ }
+if has('gui_running')
 
-    " Fuzzy Finder {{{2
-    " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
-    " max results, lot o' files in a buildout :)
-    let g:fuzzy_ceiling=35000
-    " show full paths
-    let g:fuzzy_path_display = 'highlighted_path'
-    " ignored files
-    let g:fuzzy_ignore = "*.png;*.PNG;*.pyc;*.pyo;*.JPG;*.jpg;*.GIF;*.gif;.svn/**;.git/**;*.mo;.DS_Store;.AppleDouble"
-    " available modes
-    let g:FuzzyFinderOptions = {
-        \'File': {'mode_available': 1},
-        \'Buffer': {'mode_available': 0},
-        \'Dir': {'mode_available': 0},
-        \'MruFile': {'mode_available': 0},
-        \'MruCmd': {'mode_available': 0},
-        \'Bookmark': {'mode_available': 0},
-        \}
-    " Don't delete a full path when using backspace in file mode
-    let g:FuzzyFinderOptions.File.smart_bs = 0
-    
-    " Shortcuts for opening fuzzy finder
-    nmap <LEADER>f :FufFile<SPACE>**/<CR>
-    nmap <LEADER>F :FufRenewCache<CR>
-    "nmap <leader>t :FufCoverageFile<Space>
-    "nmap <leader>ft :FufTag<Space>
-    
-    let g:buffergator_sort_regime = 'mru'
-    let g:buffergator_viewport_split_policy = 'T'
+    set guifont=Menlo\ Regular\ for\ Powerline:h12
+    set antialias
+    !rm /tmp/Powerline.cache
 
-    let g:gist_detect_filetype = 1  " detect filetype from filename
-    let g:gist_open_browser_after_post = 1  " open browser after the post
+    " Remove all the UI cruft
+    set go-=T
+    set go-=l
+    set go-=L
+    set go-=r
+    set go-=R
+    highlight SpellBad term=underline gui=undercurl guisp=Orange
 
-    if (type(a:features) == type([]) && index(a:features, 'python') != -1)
-            \ || (type(a:features) == type('') && a:features == 'all')
+    " Use a line-drawing char for pretty vertical splits.
+    set fillchars+=vert:│
 
-        au BufNewFile,BufRead *.pt set filetype=html.pt
-        au BufNewFile,BufRead *.zcml set filetype=xml.zcml
+    " Different cursors for different modes.
+    "set guicursor=n-c:block-Cursor-blinkon0
+    "set guicursor+=v:block-vCursor-blinkon0
+    "set guicursor+=i-ci:ver20-iCursor
+    " Disable all blinking:
+    set guicursor+=a:blinkon0
 
+    if has("gui_macvim")
+        " Full screen means FULL screen
+        set fuoptions=maxvert,maxhorz
 
-        let python_highlight_all=1  "highlight all python syntax
-        "highlight SpellBad term=underline gui=undercurl guisp=Red
-        "let g:pyflakes_use_quickfix = 1
-        "let g:pep8_map='<LEADER>8'
-        "au FileType python map <buffer> <LEADER>8 :call Pep8()<CR>
-    endif
+        " Use the normal HIG movements, except for M-Up/Down
+        let macvim_skip_cmd_opt_movement = 1
+        no   <D-Left>       <Home>
+        no!  <D-Left>       <Home>
+        no   <M-Left>       <C-Left>
+        no!  <M-Left>       <C-Left>
 
-    if (type(a:features) == type([]) && index(a:features, 'javascript') != -1)
-            \ || (type(a:features) == type('') && a:features == 'all')
-        au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
-    endif
+        no   <D-Right>      <End>
+        no!  <D-Right>      <End>
+        no   <M-Right>      <C-Right>
+        no!  <M-Right>      <C-Right>
 
-endfun
+        no   <D-Up>         <C-Home>
+        ino  <D-Up>         <C-Home>
+        imap <M-Up>         <C-o>{
 
+        no   <D-Down>       <C-End>
+        ino  <D-Down>       <C-End>
+        imap <M-Down>       <C-o>}
 
-fun! vim_config_garbas#config(features)
+        imap <M-BS>         <C-w>
+        inoremap <D-BS>     <esc>my0c`y
+    else
+        " Non-MacVim GUI, like Gvim
+    end
 
-    "" GENERAL - I think we can all agree this would be nice default
-    set nomodeline  " FreeBSD security advisory for this one...
-    set enc=utf-8  " set the default encoding
-    set title  " set the title of the window
-    set titlestring=%f%(\ [%M]%)¬
-    set nocompatible  " This setting prevents vim from emulating the original vi's
-                      " bugs and limitations
-    set showmode
-    set showcmd  " Display an incomplete command in the lower right corner of the Vim window
-    set history=1000  " have 1000 lines of command-line (etc) history
-    set so=4  " Set a margin of lines when scrolling
-    set statusline=\ \ \ \ \ line:%l\ column:%c\ \ \ %M%Y%r%=%-14.(%t%)\ %p%%
-                        " set a custom status line similar to that of ``:set ruler``
-    set completeopt+=longest,menuone
-    set laststatus=2  " show the statusline in all window
-    set equalalways  " set all window splits equal
-    if has('mouse')
-        set mouse=a  " have the mouse enabled all the time
-        set mousemodel=popup " make a menu popup on right click
-    endif
-    if has('gui_running')
-        
-        set go-=T
+" }}}
+" Console UI {{{
+else
 
-        if has("gui_macvim")
-            " use the whole screen
-            "set fuoptions=maxvert,maxhorz
-            " use Monaco with no antialiasing
-            set guifont=Inconsolata-dz:h10,Inconsolata:h12,Monaco:h10
-            set antialias
-            " maybe set the transparency
-            " XXX: getting annoyed by the transparency
-            "set transparency=2
-            " turn off transparency
-            noremap <leader>TT :set transparency=0<CR>
-        endif
-    endif
-    set hidden  " allow for switching buffers when a file has changes
-    set t_vb=  " make sure the bell shuts up
-    set pastetoggle=<F2>
-    set wildmenu
-    set wildmode=list:longest
-    set backspace=indent,eol,start
-    set autoindent
-    syntax on
-    filetype on
-    filetype plugin on
-    filetype plugin indent on
-    set backupdir=~/.vim/backup,.,/tmp¬
-    set directory=~/.vim/backup/swap,.,/tmp¬
-    set backupskip=/tmp/*,/private/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*¬
-    set tabstop=4
-    set shiftwidth=4
-    set softtabstop=4
-    set expandtab
-    ""set foldmethod=indent
-    set wrap
-    set textwidth=79
-    if version >= 730
-      set colorcolumn=80
-    endif
-    match ErrorMsg '\%>80v.+'
-    set formatoptions=qrnl
-    set number  " turn on line numbers¬
-    set cul cuc " enable line & columns highlighting
-    set list
-    nnoremap / /\v
-    vnoremap / /\v
-    set incsearch  " find as you type
-    set gdefault
-    set hlsearch  " highlight the terms
-    set ignorecase  " make searches case-insensitive
-    set smartcase  " unless they contain upper-case letters
-    set nospell
-    set wildignore+=*.o,*.obj,*.pyc,*.pyo,.git,.svn,.hg
-    set t_Co=256
-    set background=dark
-
-    "" http://ilker.de/specific-vim-settings-per-project-
-    set exrc
-    set secure
-
-    "" STRIP TRAILING WHITESPACE
-    fun! Preserve(command)
-        " Preparation: save last search, and cursor position.
-        let _s=@/
-        let l = line(".")
-        let c = col(".")
-        " Do the business:
-        execute a:command
-        " Clean up: restore previous search history, and cursor position
-        let @/=_s
-        call cursor(l, c)
-    endfun
-
-    nmap <LEADER>l :set list!<CR>
-    nmap <LEADER>W :call Preserve("%s/\\s\\+$//e")<CR>
-    map <SILENT> <LEADER>s :set spell!<CR>
-    map <SILENT> <LEADER>h :set hlsearch!<CR>¬
-    map <SILENT> <LEADER>n :set number!<CR>
-
-    autocmd FileType python set omnifunc=pythoncomplete#Complete
-    autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-    autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-    autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-    autocmd FileType c set omnifunc=ccomplete#Complete
-
-    if (type(a:features) == type([]) && index(a:features, 'textmate') != -1)
-            \ || (type(a:features) == type('') && a:features == 'all')
-
-        " The last two lines make the tab key match bracket pairs. I use this
-        " to move around all the time and <tab> is a hell of a lot easier to
-        " type than %.
-        nnoremap <TAB> %
-        vnoremap <TAB> %
-
-
-        "" - >>, << TextMate’s key mappings for manual indentation
-        ""  >>              -- manual indent
-        ""  <<              -- manual unindent
-        nmap <D-[> <<
-        nmap <D-]> >>
-        vmap <D-[> <gv
-        vmap <D-]> >gv
-
-        "" Use the same symbols as TextMate for tabstops and EOLs
-        set listchars=tab:▸\ ,eol:¬
-
-        "" WINDOWS
-        nnoremap <C-h> <C-w>h
-        nnoremap <C-j> <C-w>j
-        nnoremap <C-k> <C-w>k
-        nnoremap <C-l> <C-w>l
-
-    endif
-
-    if (type(a:features) == type([]) && index(a:features, 'expert') != -1)
-            \ || (type(a:features) == type('') && a:features == 'all')
-
-        noremap ; :
-        inoremap jj <ESC>
-
-    endif
-
-    " Show syntax highlighting groups for word under cursor
-    nmap <C-S-P> :call <SID>SynStack()<CR>
-    function! <SID>SynStack()
-        if !exists("*synstack")
-            return
-        endif
-        echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-    endfunc
+endif
+" }}}
 
 endfun
