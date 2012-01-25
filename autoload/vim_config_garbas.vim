@@ -15,8 +15,8 @@ let addons = [
     \ ['delimitMate', ['default']],
     \ ['unimpaired', ['default']],
     \ ['scratch', ['default']],
-    \ ['tabular', ['default']],
-    \ ['markdown', ['default']],
+    \ ['Tabular', ['default']],
+    \ ['Markdown', ['default']],
     \ ['molokai', ['default']],
     \ ['utl', ['default']],
     \ ['flake8', ['python']],
@@ -66,7 +66,7 @@ call extend(addons, [['Python-mode-klen', ['default'], 'Addons_Python_mode_klen'
 
 " }}}
 " Syntastic {{{
-
+" I should think about using synaptic2
 function! Addons_Syntastic ()
     let g:syntastic_check_on_open=1
     let g:syntastic_auto_jump=0
