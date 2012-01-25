@@ -7,6 +7,8 @@ fun! vim_config_garbas#config(category)
 
 " Addons (VIM) ------------------------------------------------------------ {{{
 
+" addons to rethink 
+"    \ ['Markdown', ['default']], " requires old snipMate
 let addons = [
     \ ['snipmate', ['default']],
     \ ['snipmate-snippets', ['default']],
@@ -16,7 +18,6 @@ let addons = [
     \ ['unimpaired', ['default']],
     \ ['scratch', ['default']],
     \ ['Tabular', ['default']],
-    \ ['Markdown', ['default']],
     \ ['molokai', ['default']],
     \ ['utl', ['default']],
     \ ['flake8', ['python']],
