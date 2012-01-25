@@ -12,7 +12,6 @@ let addons = [
     \ ['snipmate-snippets', ['default']],
     \ ['AutoComplPop', ['default']],
         \ ['L9', ['default']],
-    \ ['Syntastic', ['default']],
     \ ['delimitMate', ['default']],
     \ ['unimpaired', ['default']],
     \ ['scratch', ['default']],
@@ -21,11 +20,13 @@ let addons = [
     \ ['molokai', ['default']],
     \ ['utl', ['default']],
     \ ['flake8', ['python']],
+    \ ['python%790', ['python']],
     \ ['jshint', ['javascript']],
     \ ['jQuery', ['javascript']],
     \ ['css_color@skammer', ['web']],
     \ ['vim-less', ['web']],
     \ ['html5', ['web']],
+    \ ['YankRing', ['default']],
     \ ]
 
 " ADDONS:
@@ -36,7 +37,7 @@ function! Addons_Python_mode_klen ()
     let g:pymode_run = 0
     let g:pymode_lint = 0
     let g:pymode_breakpoint = 0
-    let g:pymode_syntax = 0
+    let g:pymode_syntax = 1
     let g:pymode_utils_whitespaces = 0
     let g:pymode_virtualenv = 0
     let g:pymode_options_indent = 0
@@ -334,6 +335,9 @@ set noswapfile                    " It's 2012, Vim.
 " Color scheme {{{
 
 syntax on
+filetype on
+filetype plugin on
+filetype plugin indent on
 colorscheme molokai
 "colorscheme solarized
 set background=dark
