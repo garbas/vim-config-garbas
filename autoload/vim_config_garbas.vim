@@ -151,7 +151,7 @@ function! Addons_proj ()
     let g:ProjFileBrowser = 'off'
 endfunction
 
-call extend(addons, [['proj', ['default'], 'Addons_proj']])
+call extend(addons, [['Proj', ['default'], 'Addons_proj']])
 
 " }}}
 " fugitive {{{
