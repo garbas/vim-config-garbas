@@ -8,13 +8,13 @@ fun! vim_config_garbas#config(category)
 " Addons (VIM) ------------------------------------------------------------ {{{
 
 " addons to rethink 
+"    \ ['delimitMate', ['default']],
 "    \ ['Markdown', ['default']], " requires old snipMate
 let addons = [
     \ ['snipmate', ['default']],
     \ ['snipmate-snippets', ['default']],
     \ ['AutoComplPop', ['default']],
         \ ['L9', ['default']],
-    \ ['delimitMate', ['default']],
     \ ['unimpaired', ['default']],
     \ ['scratch', ['default']],
     \ ['Tabular', ['default']],
@@ -239,7 +239,6 @@ set history=1000
 set undofile
 set undoreload=10000
 set cpoptions+=J
-set list
 set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
 set shell=/bin/bash
 set lazyredraw
