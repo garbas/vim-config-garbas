@@ -20,13 +20,13 @@ let addons = [
     \ ['Tabular', ['default']],
     \ ['molokai', ['default']],
     \ ['utl', ['default']],
-    \ ['flake8', ['python']],
-    \ ['python%790', ['python']],
-    \ ['jshint', ['javascript']],
-    \ ['jQuery', ['javascript']],
-    \ ['css_color@skammer', ['web']],
-    \ ['vim-less', ['web']],
-    \ ['html5', ['web']],
+    \ ['flake8', ['default', 'python']],
+    \ ['python%790', ['default', 'python']],
+    \ ['jshint', ['default', 'web', 'js']],
+    \ ['jQuery', ['default', 'web']],
+    \ ['css_color@skammer', ['default', 'web']],
+    \ ['vim-less', ['default', 'web']],
+    \ ['html5', ['default', 'web']],
     \ ['YankRing', ['default']],
     \ ]
 
@@ -63,7 +63,7 @@ function! Addons_Python_mode_klen ()
     "let g:pymode_rope_always_show_complete_menu = 0
 endfunction
 
-call extend(addons, [['Python-mode-klen', ['default'], 'Addons_Python_mode_klen']])
+call extend(addons, [['Python-mode-klen', ['default', 'python'], 'Addons_Python_mode_klen']])
 
 " }}}
 " Syntastic {{{
