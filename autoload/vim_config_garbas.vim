@@ -16,7 +16,7 @@ let addons = [
     \ ['AutoComplPop', ['default']],
         \ ['L9', ['default']],
     \ ['unimpaired', ['default']],
-    \ ['scratch', ['default']],
+    \ ['Scratch', ['default']],
     \ ['Tabular', ['default']],
     \ ['molokai', ['default']],
     \ ['utl', ['default']],
@@ -92,11 +92,11 @@ call extend(addons, [['Gundo', ['default'], 'Addons_Gundo']])
 " }}}
 " Powerline {{{
 
-function! Addons_powerline ()
+function! Addons_Powerline ()
     let g:Powerline_symbols = 'fancy'
 endfunction
 
-call extend(addons, [['powerline', ['default'], 'Addons_powerline']])
+call extend(addons, [['Powerline', ['default'], 'Addons_Powerline']])
 
 " }}}
 " Ctrl-P {{{
