@@ -240,7 +240,6 @@ set undofile
 set undoreload=10000
 set cpoptions+=J
 set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
-set shell=/bin/bash
 set lazyredraw
 set matchtime=3
 set showbreak=↪
@@ -753,7 +752,6 @@ if has('gui_running')
 
     set guifont=Menlo\ Regular\ for\ Powerline:h12
     set antialias
-    !rm /tmp/Powerline.cache
 
     " Remove all the UI cruft
     set go-=T
