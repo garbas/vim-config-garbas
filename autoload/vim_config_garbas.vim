@@ -28,6 +28,7 @@ let addons = [
     \ ['vim-less', ['default', 'web']],
     \ ['html5', ['default', 'web']],
     \ ['YankRing', ['default']],
+    \ ['tslime', ['default']],
     \ ]
 
 " ADDONS:
@@ -262,7 +263,7 @@ set pastetoggle=<F2>  " Toggle paste
 set backupskip=/tmp/*,/private/tmp/*"
 
 " Save when losing focus
-au FocusLost * :wa
+"au FocusLost * :wa
 
 " Resize splits when the window is resized
 au VimResized * exe "normal! \<c-w>="
@@ -337,9 +338,9 @@ syntax on
 filetype on
 filetype plugin on
 filetype plugin indent on
-colorscheme molokai
-"colorscheme solarized
-set background=dark
+"colorscheme molokai
+colorscheme solarized
+set background=light
 
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
@@ -476,9 +477,9 @@ set foldlevelstart=0
 nnoremap <Space> za
 vnoremap <Space> za
 
-" Make zO recursively open whatever top level fold we're in, no matter where the
+" Make zz recursively open whatever top level fold we're in, no matter where the
 " cursor happens to be.
-nnoremap zO zCzO
+nnoremap zz zCzO
 
 " Use ,z to "focus" the current fold.
 nnoremap <leader>z zMzvzz
@@ -765,11 +766,16 @@ if has('gui_running')
     set fillchars+=vert:│
 
     " Different cursors for different modes.
+    highlight iCursor guifg=white guibg=steelblue
+    set guicursor=n-v-c:block-Cursor
+    set guicursor+=i:ver100-iCursor
+    set guicursor+=n-v-c:blinkon0
+    "set guicursor+=i:blinkwait10
+
     "set guicursor=n-c:block-Cursor-blinkon0
     "set guicursor+=v:block-vCursor-blinkon0
-    "set guicursor+=i-ci:ver20-iCursor
-    " Disable all blinking:
-    set guicursor+=a:blinkon0
+    "set guicursor+=i-ci:ver100-iCursor
+    set guicursor+=a:blinkon0  " Disable all blinking:
 
     if has("gui_macvim")
         " Full screen means FULL screen
