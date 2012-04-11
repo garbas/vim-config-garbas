@@ -8,6 +8,7 @@ fun! vim_config_garbas#config(category)
 " Addons (VIM) ------------------------------------------------------------ {{{
 
 " addons to rethink 
+"    \ ['tslime', ['default']],
 "    \ ['delimitMate', ['default']],
 "    \ ['Markdown', ['default']], " requires old snipMate
 let addons = [
@@ -19,16 +20,15 @@ let addons = [
     \ ['Scratch', ['default']],
     \ ['Tabular', ['default']],
     \ ['molokai', ['default']],
-    \ ['utl', ['default']],
+    \ ['Wombat', ['default']],
     \ ['flake8', ['default', 'python']],
     \ ['python%790', ['default', 'python']],
-    \ ['jshint', ['default', 'web', 'js']],
     \ ['jQuery', ['default', 'web']],
     \ ['css_color@skammer', ['default', 'web']],
     \ ['vim-less', ['default', 'web']],
     \ ['html5', ['default', 'web']],
     \ ['YankRing', ['default']],
-    \ ['tslime', ['default']],
+    \ ['sparkup', ['default']],
     \ ]
 
 " ADDONS:
@@ -72,7 +72,7 @@ call extend(addons, [['Python-mode-klen', ['default', 'python'], 'Addons_Python_
 function! Addons_Syntastic ()
     let g:syntastic_check_on_open=1
     let g:syntastic_auto_jump=0
-    let g:syntastic_javascript_checker = 'jshint'
+    let g:syntastic_javascript_checker = '/home/rok/node_modules/jshint/bin/hint'
     let g:syntastic_stl_format = '[%E{%e Errors}%B{, }%W{%w Warnings}]'
 endfunction
 
@@ -82,10 +82,9 @@ call extend(addons, [['Syntastic', ['default'], 'Addons_Syntastic']])
 " Gundo {{{
 
 function! Addons_Gundo ()
-    nnoremap <F5> :GundoToggle<CR>
     let g:gundo_debug = 1
     let g:gundo_preview_bottom = 1
-    map <leader>G :gundotoggle<cr>
+    map <leader>G :GundoToggle<cr>
 endfunction
 
 call extend(addons, [['Gundo', ['default'], 'Addons_Gundo']])
@@ -120,7 +119,7 @@ function! Addons_ctrlp()
         \ 'ToggleFocus()':        ['<c-tab>'],
         \ }
 
-    nnoremap <leader>. :CtrlPTag<cr>
+    nnoremap <leader>. :CtrlPBuffer<cr>
 endfunction
 
 call extend(addons, [['ctrlp', ['default'], 'Addons_ctrlp']])
@@ -147,24 +146,14 @@ endfunction
 call extend(addons, [['Gist', ['default'], 'Addons_Gist']])
 
 " }}}
-" proj {{{
-
-function! Addons_proj ()
-    let g:ProjFileBrowser = 'off'
-endfunction
-
-call extend(addons, [['Proj', ['default'], 'Addons_proj']])
-
-" }}}
 " fugitive {{{
 
 function! Addons_fugitive ()
     map <LEADER>gg :Git
     map <LEADER>gr :Gremove
     map <LEADER>gm :Gmove
-    map <LEADER>s :Gstatus<CR>
-    map <LEADER>d :Gdiff<CR>
-    "set statusline=%F%m%r%h%w %{fugitive#statusline()} [%{strlen(&fenc)?&fenc:&enc}] [line\ %l\/%L]
+    map <LEADER>gs :Gstatus<CR>
+    map <LEADER>gd :Gdiff<CR>
 endfunction
 
 call extend(addons, [['fugitive', ['default'], 'Addons_fugitive']])
@@ -179,16 +168,48 @@ endfunction
 call extend(addons, [['TaskList', ['default'], 'Addons_TaskList']])
 
 " }}}
+" Tagbar {{{
+
+function! Addons_Tagbar()
+    nmap <LEADER>tb :TagbarToggle<CR>
+endfunction
+
+call extend(addons, [['Tagbar', ['default'], 'Addons_Tagbar']])
+
+" }}}
 " Solarized {{{
 
 function! Addons_Solarized ()
-    call togglebg#map("<LEADER>c")
+    "call togglebg#map("<LEADER>c")
     let g:solarized_termcolors = 256
     let g:solarized_hitrail = 1
     let g:solarized_diffmode = "high"
 endfunction
 
-call extend(addons, [['Solarized', ['default'], 'Addons_Solarized']])
+"call extend(addons, [['Solarized', ['default'], 'Addons_Solarized']])
+
+" }}}
+" sessionman {{{
+
+function! Addons_sessionman()
+    map <LEADER>ss :SessionSave<CR>
+    map <LEADER>sa :SessionSaveAs
+    map <LEADER>sc :SessionClose<CR>
+    map <LEADER>sl :SessionList<CR>
+endfunction
+
+call extend(addons, [['sessionman', ['default'], 'Addons_sessionman']])
+
+" }}}
+" utl {{{
+
+function! Addons_utl()
+    let utl_opt_verbose=1
+    "map <LEADER>X :let @*=expand("%:p")<CR>
+    map <LEADER>xx :Utl<CR>
+endfunction
+
+call extend(addons, [['utl', ['default'], 'Addons_utl']])
 
 " }}}
 
@@ -339,8 +360,10 @@ filetype on
 filetype plugin on
 filetype plugin indent on
 "colorscheme molokai
-colorscheme solarized
-set background=light
+"colorscheme solarized
+colorscheme wombat
+set background=dark
+"set background=light
 
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
@@ -536,6 +559,7 @@ augroup ft_css
     au BufNewFile,BufRead *.less setlocal filetype=less
 
     au Filetype less,css setlocal foldmethod=marker
+    au Filetype less,css setlocal ts=2 sts=2 sw=2
     au Filetype less,css setlocal foldmarker={,}
     au Filetype less,css setlocal omnifunc=csscomplete#CompleteCSS
     au Filetype less,css setlocal iskeyword+=-
@@ -572,11 +596,13 @@ augroup END
 augroup ft_html
     au!
 
-    au BufNewFile,BufRead *.html setlocal filetype=html
+    au BufNewFile,BufRead *.html *.pt *.zcml setlocal filetype=html
     au FileType html setlocal foldmethod=manual
+    au Filetype html setlocal ts=2 sts=2 sw=2
 
     " Use <localleader>f to fold the current tag.
     au FileType html nnoremap <buffer> <localleader>f Vatzf
+
 
     " Use Shift-Return to turn this:
     " <tag>|</tag>
@@ -603,6 +629,7 @@ augroup ft_javascript
 
     au FileType javascript setlocal foldmethod=marker
     au FileType javascript setlocal foldmarker={,}
+    au Filetype javascript setlocal ts=2 sts=2 sw=2
 
     au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 
@@ -719,9 +746,6 @@ nnoremap <leader>w gqip
 nnoremap <leader>Al :left<cr>
 nnoremap <leader>Ac :center<cr>
 nnoremap <leader>Ar :right<cr>
-vnoremap <leader>Al :left<cr>
-vnoremap <leader>Ac :center<cr>
-vnoremap <leader>Ar :right<cr>
 
 " Less chording
 nnoremap ; :
