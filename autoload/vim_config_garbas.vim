@@ -7,13 +7,14 @@ fun! vim_config_garbas#config(category)
 
 " Addons (VIM) ------------------------------------------------------------ {{{
 
+" TODO:
+" cscope
+
 " addons to rethink 
 "    \ ['tslime', ['default']],
 "    \ ['delimitMate', ['default']],
 "    \ ['Markdown', ['default']], " requires old snipMate
 let addons = [
-    \ ['snipmate', ['default']],
-    \ ['snipmate-snippets', ['default']],
     \ ['AutoComplPop', ['default']],
         \ ['L9', ['default']],
     \ ['unimpaired', ['default']],
@@ -32,6 +33,18 @@ let addons = [
     \ ]
 
 " ADDONS:
+" snipMate {{{
+function! Addons_snipmate()
+    "let g:snips_trigger_key='<C-e>'
+endfunction
+
+function! Addons_snipmate_snippets()
+endfunction
+
+call extend(addons, [['snipmate', ['default'], 'Addons_snipmate']])
+call extend(addons, [['snipmate-snippets', ['default'], 'Addons_snipmate_snippets']])
+
+" }}}
 " Python-mode {{{
 
 function! Addons_Python_mode_klen ()
@@ -94,6 +107,8 @@ call extend(addons, [['Gundo', ['default'], 'Addons_Gundo']])
 
 function! Addons_Powerline ()
     let g:Powerline_symbols = 'fancy'
+    "let g:Powerline_theme = 'skwp'
+    "let g:Powerline_colorscheme = 'skwp'
 endfunction
 
 call extend(addons, [['Powerline', ['default'], 'Addons_Powerline']])
@@ -180,13 +195,13 @@ call extend(addons, [['Tagbar', ['default'], 'Addons_Tagbar']])
 " Solarized {{{
 
 function! Addons_Solarized ()
-    "call togglebg#map("<LEADER>c")
+    call togglebg#map("<LEADER>C")
     let g:solarized_termcolors = 256
     let g:solarized_hitrail = 1
     let g:solarized_diffmode = "high"
 endfunction
 
-"call extend(addons, [['Solarized', ['default'], 'Addons_Solarized']])
+call extend(addons, [['Solarized', ['default'], 'Addons_Solarized']])
 
 " }}}
 " sessionman {{{
@@ -360,8 +375,8 @@ filetype on
 filetype plugin on
 filetype plugin indent on
 "colorscheme molokai
-"colorscheme solarized
-colorscheme wombat
+"colorscheme wombat
+colorscheme solarized
 set background=dark
 "set background=light
 
