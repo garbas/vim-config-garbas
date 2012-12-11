@@ -3,129 +3,23 @@
 " Source: http://github.com/garbas/vim-config-garbas
 "
 
-fun! vim_config_garbas#config(category)
+fun! garbas#config()
 
-" Addons (VIM) ------------------------------------------------------------ {{{
-
-" TODO:
-" cscope
-
-" addons to rethink 
-"    \ ['tslime', ['default']],
-"    \ ['delimitMate', ['default']],
-"    \ ['Markdown', ['default']], " requires old snipMate
-let addons = [
-    \ ['AutoComplPop', ['default']],
-        \ ['L9', ['default']],
-    \ ['unimpaired', ['default']],
-    \ ['Scratch', ['default']],
-    \ ['Tabular', ['default']],
-    \ ['molokai', ['default']],
-    \ ['Wombat', ['default']],
-    \ ['python%790', ['default', 'python']],
-    \ ['jQuery', ['default', 'web']],
-    \ ['css_color@skammer', ['default', 'web']],
-    \ ['vim-less', ['default', 'web']],
-    \ ['html5', ['default', 'web']],
-    \ ['YankRing', ['default']],
-    \ ['sparkup', ['default']],
-    \ ]
-
-" ADDONS:
-" snipMate {{{
-function! Addons_snipmate()
-    "let g:snips_trigger_key='<C-e>'
-endfunction
-
-function! Addons_snipmate_snippets()
-endfunction
-
-call extend(addons, [['snipmate', ['default'], 'Addons_snipmate']])
-call extend(addons, [['snipmate-snippets', ['default'], 'Addons_snipmate_snippets']])
-
-" }}}
-" Python-mode {{{
-
-function! Addons_Python_mode_klen ()
-    let g:pymode_doc = 0
-    let g:pymode_run = 0
-    let g:pymode_lint = 0
-    let g:pymode_breakpoint = 0
-    let g:pymode_syntax = 1
-    let g:pymode_utils_whitespaces = 0
-    let g:pymode_virtualenv = 0
-    let g:pymode_options_indent = 0
-    let g:pymode_options_fold = 0
-    let g:pymode_options_other = 0
-
-    let g:pymode_rope = 1
-    let g:pymode_rope_global_prefix = "<localleader>R"
-    let g:pymode_rope_local_prefix = "<localleader>r"
-    "let g:pymode_rope_auto_project = 1
-    "let g:pymode_rope_enable_autoimport = 0
-    "let g:pymode_rope_autoimport_generate = 1
-    "let g:pymode_rope_autoimport_underlineds = 0
-    "let g:pymode_rope_codeassist_maxfixes = 10
-    "let g:pymode_rope_sorted_completions = 1
-    "let g:pymode_rope_extended_complete = 1
-    "let g:pymode_rope_autoimport_modules = ["os", "shutil", "datetime"]
-    "let g:pymode_rope_confirm_saving = 1
-    "let g:pymode_rope_vim_completion = 1
-    "let g:pymode_rope_guess_project = 1
-    "let g:pymode_rope_goto_def_newwin = 0
-    "let g:pymode_rope_always_show_complete_menu = 0
-endfunction
-
-call extend(addons, [['Python-mode-klen', ['default', 'python'], 'Addons_Python_mode_klen']])
-
-" }}}
-" Syntastic {{{
-" I should think about using synaptic2
-function! Addons_Syntastic ()
-    let g:syntastic_check_on_open=1
-    let g:syntastic_auto_jump=0
-    let g:syntastic_javascript_checker = '/home/rok/node_modules/jshint/bin/hint'
-    let g:syntastic_stl_format = '[%E{%e Errors}%B{, }%W{%w Warnings}]'
-endfunction
-
-call extend(addons, [['Syntastic', ['default'], 'Addons_Syntastic']])
-
-" }}}
-" Gundo {{{
-
-function! Addons_Gundo ()
-    let g:gundo_debug = 1
-    let g:gundo_preview_bottom = 1
-    map <leader>G :GundoToggle<cr>
-endfunction
-
-call extend(addons, [['Gundo', ['default'], 'Addons_Gundo']])
-
-" }}}
-" Powerline {{{
-
-function! Addons_Powerline ()
-    let g:Powerline_symbols = 'fancy'
-    "let g:Powerline_theme = 'skwp'
-    "let g:Powerline_colorscheme = 'skwp'
-endfunction
-
-call extend(addons, [['Powerline', ['default'], 'Addons_Powerline']])
-
-" }}}
-" Ctrl-P {{{
+" Addons {{{
+" My Addons Custom Config {{{
+" ctrlp {{{
 
 function! Addons_ctrlp()
-    let g:ctrlp_dont_split = 'NERD_tree_2'
-    let g:ctrlp_jump_to_buffer = 0
-    let g:ctrlp_map = '<leader>,'
-    let g:ctrlp_working_path_mode = 0
-    let g:ctrlp_match_window_reversed = 1
-    let g:ctrlp_split_window = 0
-    let g:ctrlp_max_height = 20
-    let g:ctrlp_extensions = ['tag']
+  let g:ctrlp_dont_split = 'NERD_tree_2'
+  let g:ctrlp_jump_to_buffer = 0
+  let g:ctrlp_map = '<leader>,'
+  let g:ctrlp_working_path_mode = 0
+  let g:ctrlp_match_window_reversed = 1
+  let g:ctrlp_split_window = 0
+  let g:ctrlp_max_height = 20
+  let g:ctrlp_extensions = ['tag']
 
-    let g:ctrlp_prompt_mappings = {
+  let g:ctrlp_prompt_mappings = {
         \ 'PrtSelectMove("j")':   ['<c-j>', '<down>', '<s-tab>'],
         \ 'PrtSelectMove("k")':   ['<c-k>', '<up>', '<tab>'],
         \ 'PrtHistory(-1)':       ['<c-n>'],
@@ -133,125 +27,101 @@ function! Addons_ctrlp()
         \ 'ToggleFocus()':        ['<c-tab>'],
         \ }
 
-    nnoremap <leader>. :CtrlPBuffer<cr>
+  nnoremap <leader>. :CtrlPBuffer<cr>
 endfunction
-
-call extend(addons, [['ctrlp', ['default'], 'Addons_ctrlp']])
-
-" }}}
-" vim-orgmode {{{
-
-function! Addons_orgmode ()
-    "let g:org_plugins = ['ShowHide', '|', 'Navigator', 'EditStructure', '|', 'Todo', 'Date', 'Misc']
-    "let g:org_todo_keywords = ['TODO', '|', 'DONE']
-    let g:org_debug = 1
-endfunction
-
-call extend(addons, [['vim-orgmode', ['default'], 'Addons_orgmode']])
 
 " }}}
 " Gist {{{
 
 function! Addons_Gist ()
-    let g:gist_detect_filetype = 1  " detect filetype from filename
-    let g:gist_open_browser_after_post = 1  " open browser after the post
+  let g:gist_detect_filetype = 1  " detect filetype from filename
+  let g:gist_open_browser_after_post = 1  " open browser after the post
 endfunction
-
-call extend(addons, [['Gist', ['default'], 'Addons_Gist']])
-
-" }}}
-" fugitive {{{
-
-function! Addons_fugitive ()
-    map <LEADER>gg :Git
-    map <LEADER>gr :Gremove
-    map <LEADER>gm :Gmove
-    map <LEADER>gs :Gstatus<CR>
-    map <LEADER>gd :Gdiff<CR>
-endfunction
-
-call extend(addons, [['fugitive', ['default'], 'Addons_fugitive']])
-
-" }}}
-" TaskList {{{
-
-function! Addons_TaskList ()
-    map <LEADER>tt <Plug>TaskList
-endfunction
-
-call extend(addons, [['TaskList', ['default'], 'Addons_TaskList']])
-
-" }}}
-" Tagbar {{{
-
-function! Addons_Tagbar()
-    nmap <LEADER>tb :TagbarToggle<CR>
-endfunction
-
-call extend(addons, [['Tagbar', ['default'], 'Addons_Tagbar']])
 
 " }}}
 " Solarized {{{
 
 function! Addons_Solarized ()
-    call togglebg#map("<LEADER>C")
-    let g:solarized_termcolors = 256
-    let g:solarized_hitrail = 1
-    let g:solarized_diffmode = "high"
+  call togglebg#map("<LEADER>C")
+  let g:solarized_termcolors = 256
+  let g:solarized_hitrail = 1
+  let g:solarized_diffmode = "high"
 endfunction
 
-call extend(addons, [['Solarized', ['default'], 'Addons_Solarized']])
+" }}}
+" }}}
+" My Addons {{{
+
+let g:PIPA_ADDONS = {
+      \ 'AutoComplPop': { 'categories': [ 'default' ] },
+        \ 'L9': { 'categories': ['default'] },
+      \ 'unimpaired': { 'categories': [ 'default' ] },
+      \ 'Tabular': { 'categories': [ 'default' ] },
+      \ 'ctrlp': { 'categories': [ 'default' ], 'config': function('Addons_ctrlp') },
+      \ 'snipmate': { 'categories': [ 'default' ] },
+      \ 'snipmate-snippets': { 'categories': [ 'default' ] },
+      \ 'vim-orgmode': { 'categories': [ 'default' ] },
+      \ 'Gist': { 'categories': [ 'development' ], 'config': function('Addons_Gist') },
+      \ 'Solarized': { 'categories': [ 'default' ] },
+  \ }
+
+
+" TODO: {{{
+" cscope
+" ['Scratch', ['default']],
+" Utl
+" let g:syntastic_javascript_checker = '/home/rok/node_modules/jshint/bin/hint'
+" Python-mode {{{
+"
+"function! Addons_Python_mode_klen ()
+"    let g:pymode_doc = 0
+"    let g:pymode_run = 0
+"    let g:pymode_lint = 0
+"    let g:pymode_breakpoint = 0
+"    let g:pymode_syntax = 1
+"    let g:pymode_utils_whitespaces = 0
+"    let g:pymode_virtualenv = 0
+"    let g:pymode_options_indent = 0
+"    let g:pymode_options_fold = 0
+"    let g:pymode_options_other = 0
+"
+"    let g:pymode_rope = 1
+"    let g:pymode_rope_global_prefix = "<localleader>R"
+"    let g:pymode_rope_local_prefix = "<localleader>r"
+"    "let g:pymode_rope_auto_project = 1
+"    "let g:pymode_rope_enable_autoimport = 0
+"    "let g:pymode_rope_autoimport_generate = 1
+"    "let g:pymode_rope_autoimport_underlineds = 0
+"    "let g:pymode_rope_codeassist_maxfixes = 10
+"    "let g:pymode_rope_sorted_completions = 1
+"    "let g:pymode_rope_extended_complete = 1
+"    "let g:pymode_rope_autoimport_modules = ["os", "shutil", "datetime"]
+"    "let g:pymode_rope_confirm_saving = 1
+"    "let g:pymode_rope_vim_completion = 1
+"    "let g:pymode_rope_guess_project = 1
+"    "let g:pymode_rope_goto_def_newwin = 0
+"    "let g:pymode_rope_always_show_complete_menu = 0
+"endfunction
+"
+" }}}
+"
+" addons to rethink 
+"    \ ['tslime', ['default']],
+"    \ ['delimitMate', ['default']],
+"    \ ['Markdown', ['default']], " requires old snipMate
 
 " }}}
-" sessionman {{{
-
-function! Addons_sessionman()
-    map <LEADER>ss :SessionSave<CR>
-    map <LEADER>sa :SessionSaveAs
-    map <LEADER>sc :SessionClose<CR>
-    map <LEADER>sl :SessionList<CR>
-endfunction
-
-call extend(addons, [['sessionman', ['default'], 'Addons_sessionman']])
-
-" }}}
-" utl {{{
-
-function! Addons_utl()
-    let utl_opt_verbose=1
-    "map <LEADER>X :let @*=expand("%:p")<CR>
-    map <LEADER>xx :Utl<CR>
-endfunction
-
-call extend(addons, [['utl', ['default'], 'Addons_utl']])
 
 " }}}
 
-" Here we initialize above addons setting and we only load plugins for category
-" provided
-let addons_to_activate = []
-let settings_to_activate = []
-for addon in addons
+if exists("$VIMCATEGORY")
+  call pipa#category($VIMCATEGORY)
+else
+  for CATEGORY in [ 'default', 'development', 'python', 'web' ]
+    call pipa#category(CATEGORY)
+  endfor
+endif
 
-    if (index(addon[1], a:category) != -1) || (a:category == 'default')
-        call extend(addons_to_activate, [addon[0]])
-        if exists("addon[2]")
-            call extend(settings_to_activate, [addon[2]])
-        endif
-    endif
-
-endfor
-
-call vam#ActivateAddons(addons_to_activate, {
-        \ 'auto_install': 1,
-        \ 'plugin_root_dir': $HOME.'/.vim/addons',
-        \ 'scm_merge_stategy': 'force',
-        \ 'known_repos_activation_policy': 'ask',
-        \ })
-
-for addon_function in settings_to_activate
-    :call call(function(addon_function), [])
-endfor
 
 " }}}
 " Basic options ----------------------------------------------------------- {{{
