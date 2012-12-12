@@ -122,6 +122,7 @@ else
   endfor
 endif
 
+call pipa#initialize()
 
 " }}}
 " Basic options ----------------------------------------------------------- {{{

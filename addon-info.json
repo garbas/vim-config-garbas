@@ -5,7 +5,7 @@
   "maintainer" : "Rok Garbas <rok@garbas.si>",
   "repository" : {"type": "git", "url": "git://github.com/garbas/vim-config-garbas.git"},
   "dependencies" : {
-    "github:kiberpipa/pipa-vim": {}
+    "pipa" : {"type": "git", "url": "git://github.com/kiberpipa/pipa-vim.git"},
   },
   "description" : "collection of usefull configurational snippets"
 }
