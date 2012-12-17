@@ -53,8 +53,6 @@ endfunction
 " My Addons {{{
 
 let g:PIPA_ADDONS = {
-      \ 'AutoComplPop': { 'categories': [ 'default' ] },
-        \ 'L9': { 'categories': ['default'] },
       \ 'unimpaired': { 'categories': [ 'default' ] },
       \ 'Tabular': { 'categories': [ 'default' ] },
       \ 'ctrlp': { 'categories': [ 'default' ], 'config': function('Addons_ctrlp') },
@@ -62,7 +60,7 @@ let g:PIPA_ADDONS = {
       \ 'snipmate-snippets': { 'categories': [ 'default' ] },
       \ 'vim-orgmode': { 'categories': [ 'default' ] },
       \ 'Gist': { 'categories': [ 'development' ], 'config': function('Addons_Gist') },
-      \ 'Solarized': { 'categories': [ 'default' ] },
+      \ 'Solarized': { 'categories': [ 'default' ], 'config': function('Addons_Solarized') },
   \ }
 
 
