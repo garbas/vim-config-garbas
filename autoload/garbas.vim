@@ -497,10 +497,10 @@ augroup ft_html
     au FileType html nnoremap <buffer> <s-cr> vit<esc>a<cr><esc>vito<esc>i<cr><esc>
 
     " Smarter pasting
-    au FileType html nnoremap <buffer> p :<C-U>YRPaste 'p'<CR>v`]=`]
-    au FileType html nnoremap <buffer> P :<C-U>YRPaste 'P'<CR>v`]=`]
-    au FileType html nnoremap <buffer> π :<C-U>YRPaste 'p'<CR>
-    au FileType html nnoremap <buffer> ∏ :<C-U>YRPaste 'P'<CR>
+    "au FileType html nnoremap <buffer> p :<C-U>YRPaste 'p'<CR>v`]=`]
+    "au FileType html nnoremap <buffer> P :<C-U>YRPaste 'P'<CR>v`]=`]
+    "au FileType html nnoremap <buffer> π :<C-U>YRPaste 'p'<CR>
+    "au FileType html nnoremap <buffer> ∏ :<C-U>YRPaste 'P'<CR>
 
 augroup END
 
