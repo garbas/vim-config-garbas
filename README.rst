@@ -6,6 +6,10 @@ bootstrap VAM
 ::
 
     mkdir ~/.vim/addons -p
+    mkdir ~/.vim/tmp -p
+    mkdir ~/.vim/tmp/backup -p
+    mkdir ~/.vim/tmp/swap -p
+    mkdir ~/.vim/tmp/undo -p
     cd ~/.vim/addons
     git clone git://github.com/MarcWeber/vim-addon-manager.git
 
