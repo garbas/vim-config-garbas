@@ -52,12 +52,13 @@ endfunction
 " }}}
 " My Addons {{{
 
+"      \ 'snipmate': { 'categories': [ 'default' ] },
+"      \ 'vim-snippets': { 'categories': [ 'default' ] },
 let g:PIPA_ADDONS = {
       \ 'unimpaired': { 'categories': [ 'default' ] },
       \ 'Tabular': { 'categories': [ 'default' ] },
       \ 'ctrlp': { 'categories': [ 'default' ], 'config': function('Addons_ctrlp') },
-      \ 'snipmate': { 'categories': [ 'default' ] },
-      \ 'snipmate-snippets': { 'categories': [ 'default' ] },
+      \ 'UltiSnips': { 'categories': [ 'default' ] },
       \ 'vim-orgmode': { 'categories': [ 'default' ] },
       \ 'Gist': { 'categories': [ 'development' ], 'config': function('Addons_Gist') },
       \ 'Solarized': { 'categories': [ 'default' ], 'config': function('Addons_Solarized') },
@@ -245,8 +246,8 @@ filetype plugin indent on
 "colorscheme molokai
 "colorscheme wombat
 colorscheme solarized
-set background=dark
-"set background=light
+"set background=dark
+set background=light
 
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
