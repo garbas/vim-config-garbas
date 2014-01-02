@@ -1,68 +1,63 @@
-" .vimrc
+" File: garbas.vim
 " Author: Rok Garbas <rok@garbas.si>
-" Source: http://github.com/garbas/vim-config-garbas
-"
+" Description: My custom vim configuration
+" Last Modified: December 27, 2013
 
 fun! garbas#config()
 
 " Addons {{{
 " My Addons Custom Config {{{
+" Gist {{{
+
+function! Addons_Gist ()
+  let g:gist_detect_filetype = 1
+  let g:gist_open_browser_after_post = 1
+  let g:gist_browser_command = 'firefox %URL%'
+endfunction
+
+" }}}
 " ctrlp {{{
 
 function! Addons_ctrlp()
   let g:ctrlp_dont_split = 'NERD_tree_2'
+  let g:ctrlp_extensions = ['undo', 'bookmarkdir', 'funky']
   let g:ctrlp_jump_to_buffer = 0
   let g:ctrlp_map = '<leader>,'
-  let g:ctrlp_working_path_mode = 0
   let g:ctrlp_match_window_reversed = 1
-  let g:ctrlp_split_window = 0
   let g:ctrlp_max_height = 20
-  let g:ctrlp_extensions = ['tag']
-
-  let g:ctrlp_prompt_mappings = {
-        \ 'PrtSelectMove("j")':   ['<c-j>', '<down>', '<s-tab>'],
-        \ 'PrtSelectMove("k")':   ['<c-k>', '<up>', '<tab>'],
-        \ 'PrtHistory(-1)':       ['<c-n>'],
-        \ 'PrtHistory(1)':        ['<c-p>'],
-        \ 'ToggleFocus()':        ['<c-tab>'],
-        \ }
+  let g:ctrlp_open_new_file = 'v'
+  let g:ctrlp_open_multiple_files = '2vjr'
+  let g:ctrlp_split_window = 0
+  let g:ctrlp_working_path_mode = 'ra'
+  let g:ctrlp_follow_symlinks = 1
 
   nnoremap <leader>. :CtrlPBuffer<cr>
+  nnoremap <leader>b :CtrlPBookmarkDir<cr>
 endfunction
 
 " }}}
-" Gist {{{
+" ctrlp-funky {{{
 
-function! Addons_Gist ()
-  let g:gist_detect_filetype = 1  " detect filetype from filename
-  let g:gist_open_browser_after_post = 1  " open browser after the post
-endfunction
-
-" }}}
-" Solarized {{{
-
-function! Addons_Solarized ()
-  call togglebg#map("<LEADER>C")
-  let g:solarized_termcolors = 256
-  let g:solarized_hitrail = 1
-  let g:solarized_diffmode = "high"
+function! Addons_ctrlp_funky()
+  nnoremap <Leader>fu :CtrlPFunky<Cr>
+  nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 endfunction
 
 " }}}
 " }}}
 " My Addons {{{
 
-"      \ 'Solarized': { 'categories': [ 'default' ], 'config': function('Addons_Solarized') },
+"      \ 'EasyMotion': { 'categories': [ 'default' ] },
 let g:PIPA_ADDONS = {
+      \ 'github:chriskempson/vim-tomorrow-theme': { 'categories': [ 'default' ] },
+      \ 'livestyle': { 'categories': [ 'default' ] },
+      \ 'vim-multiple-cursors': { 'categories': [ 'default' ] },
       \ 'vim-seek': { 'categories': [ 'default' ] },
-      \ 'vim-multiedit': { 'categories': [ 'default' ] },
-      \ 'unimpaired': { 'categories': [ 'default' ] },
-      \ 'Tabular': { 'categories': [ 'default' ] },
-      \ 'ctrlp': { 'categories': [ 'default' ], 'config': function('Addons_ctrlp') },
       \ 'UltiSnips': { 'categories': [ 'default' ] },
       \ 'vim-orgmode': { 'categories': [ 'default' ] },
       \ 'Gist': { 'categories': [ 'development' ], 'config': function('Addons_Gist') },
-      \ 'hybrid': { 'categories': [ 'default' ] },
+      \ 'ctrlp': { 'categories': [ 'default' ], 'config': function('Addons_ctrlp') },
+      \ 'ctrlp-funky': { 'categories': [ 'default' ], 'config': function('Addons_ctrlp_funky') },
   \ }
 
 
@@ -247,7 +242,7 @@ filetype plugin indent on
 "colorscheme molokai
 "colorscheme wombat
 "colorscheme solarized
-colorscheme hybrid
+colorscheme Tomorrow-Night
 set background=dark
 "set background=light
 
